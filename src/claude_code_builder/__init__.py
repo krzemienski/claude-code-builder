@@ -8,23 +8,8 @@ __version__ = "1.0.0"
 __author__ = "Claude Code Builder Team"
 __email__ = "contact@claude-code-builder.io"
 
-from claude_code_builder.core.models import (
-    Phase,
-    ProjectMetadata,
-    ProjectState,
-    SpecAnalysis,
-    Task,
-    TaskBreakdown,
-)
-
 __all__ = [
     "__version__",
     "__author__",
     "__email__",
-    "Phase",
-    "ProjectMetadata", 
-    "ProjectState",
-    "SpecAnalysis",
-    "Task",
-    "TaskBreakdown",
 ]
