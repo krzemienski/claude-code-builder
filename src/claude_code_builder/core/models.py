@@ -127,6 +127,14 @@ class TaskBreakdown(BaseModel):
     def total_tasks(self) -> int:
         """Get total number of tasks across all phases."""
         return sum(phase.total_tasks for phase in self.phases)
+    
+    @property
+    def tasks(self) -> List[Task]:
+        """Get all tasks across all phases."""
+        all_tasks = []
+        for phase in self.phases:
+            all_tasks.extend(phase.tasks)
+        return all_tasks
 
     def get_phase(self, phase_id: UUID) -> Optional[Phase]:
         """Get phase by ID."""
@@ -195,6 +203,40 @@ class ExecutionContext(TimestampedModel):
     cost_tracking: CostBreakdown = Field(default_factory=dict)
 
 
+class Message(BaseModel):
+    """Chat message."""
+    role: str
+    content: str
+
+
+class ToolDefinition(BaseModel):
+    """Tool definition for API calls."""
+    name: str
+    description: str
+    input_schema: Dict[str, Any]
+
+
+class ToolCall(BaseModel):
+    """Tool call in API response."""
+    id: str
+    name: str
+    arguments: Dict[str, Any]
+    result: Optional[Any] = None
+
+
+class GeneratedCode(TimestampedModel):
+    """Generated code information."""
+    file_path: str
+    content: str
+    language: str
+    phase: str
+    task: str
+    model: str
+    line_count: int
+    tokens_used: int
+    checksum: Optional[str] = None
+
+
 class APICall(TimestampedModel):
     """Record of an API call to Anthropic."""
 
@@ -211,7 +253,7 @@ class APICall(TimestampedModel):
     temperature: float = 0.3
     max_tokens: int = 4096
     response_content: Optional[str] = None
-    tool_calls: List[ToolCall] = Field(default_factory=list)
+    tool_calls: List["ToolCall"] = Field(default_factory=list)
     tokens_in: TokenCount = 0
     tokens_out: TokenCount = 0
     tokens_total: TokenCount = 0
@@ -256,6 +298,19 @@ class ProjectState(TimestampedModel):
     total_cost: Cost = 0.0
     error_log: List[Dict[str, Any]] = Field(default_factory=list)
     resume_data: Dict[str, Any] = Field(default_factory=dict)
+    
+    # Analysis and breakdown
+    spec_analysis: Optional[SpecAnalysis] = None
+    task_breakdown: Optional[TaskBreakdown] = None
+    project_type: Optional[ProjectType] = None
+    estimated_tokens: int = 0
+    
+    # Execution tracking
+    api_calls_made: int = 0
+    tokens_used: int = 0
+    cost_incurred: float = 0.0
+    build_completed: bool = False
+    completed_at: Optional[datetime] = None
 
     def can_resume(self) -> bool:
         """Check if the project can be resumed."""

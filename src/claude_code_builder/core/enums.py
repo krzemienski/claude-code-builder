@@ -101,6 +101,9 @@ class AgentType(str, Enum):
     ACCEPTANCE_GENERATOR = "acceptance_generator"
     DOCUMENTATION_AGENT = "documentation_agent"
     CLAUDE_CODE_EXECUTOR = "claude_code_executor"
+    CODE_GENERATOR = "code_generator"
+    TEST_GENERATOR = "test_generator"
+    ERROR_HANDLER = "error_handler"
 
 
 class MCPServer(str, Enum):
@@ -111,17 +114,29 @@ class MCPServer(str, Enum):
     SEQUENTIAL_THINKING = "sequential-thinking"
     FILESYSTEM = "filesystem"
     GIT = "git"
+    GITHUB = "github"
+    FETCH = "fetch"
+    PERPLEXITY = "perplexity"
+    TASKMASTER = "taskmaster"
 
 
 class MCPCheckpoint(str, Enum):
     """MCP usage checkpoints."""
 
+    PROJECT_INITIALIZED = "project_initialized"
+    CONTEXT_LOADED = "context_loaded"
+    SPECIFICATION_ANALYZED = "specification_analyzed"
+    TASKS_GENERATED = "tasks_generated"
     PHASE_START = "phase_start"
     BEFORE_IMPLEMENTATION = "before_implementation"
     RESEARCH = "research"
     TASK_COMPLETE = "task_complete"
     PHASE_COMPLETE = "phase_complete"
+    PHASE_COMPLETED = "phase_completed"
+    CODE_GENERATED = "code_generated"
+    TESTS_EXECUTED = "tests_executed"
     CHECKPOINT = "checkpoint"
+    BUILD_COMPLETED = "build_completed"
 
 
 class ChunkStrategy(str, Enum):

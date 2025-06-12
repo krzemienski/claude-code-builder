@@ -29,47 +29,97 @@ class MCPConfig(BaseModel):
     servers: Dict[MCPServer, MCPServerConfig] = Field(default_factory=dict)
     global_timeout: int = 30
     health_check_interval: int = 60
+    require_all: bool = False  # Require all servers to be available
+    
+    @property
+    def filesystem(self) -> Optional[MCPServerConfig]:
+        """Get filesystem server config."""
+        return self.servers.get(MCPServer.FILESYSTEM)
+    
+    @property
+    def memory(self) -> Optional[MCPServerConfig]:
+        """Get memory server config."""
+        return self.servers.get(MCPServer.MEMORY)
+    
+    @property
+    def context7(self) -> Optional[MCPServerConfig]:
+        """Get context7 server config."""
+        return self.servers.get(MCPServer.CONTEXT7)
+    
+    @property
+    def git(self) -> Optional[MCPServerConfig]:
+        """Get git server config."""
+        return self.servers.get(MCPServer.GIT)
+    
+    @property
+    def github(self) -> Optional[MCPServerConfig]:
+        """Get github server config."""
+        return self.servers.get(MCPServer.GITHUB)
+    
+    @property
+    def sequential_thinking(self) -> Optional[MCPServerConfig]:
+        """Get sequential thinking server config."""
+        return self.servers.get(MCPServer.SEQUENTIAL_THINKING)
+    
+    @property
+    def taskmaster(self) -> Optional[MCPServerConfig]:
+        """Get taskmaster server config."""
+        return self.servers.get(MCPServer.TASKMASTER)
 
     @classmethod
     def default(cls) -> "MCPConfig":
         """Get default MCP configuration."""
         return cls(
             servers={
-                MCPServer.CONTEXT7: MCPServerConfig(
-                    command="npx",
-                    args=["@context/mcp"],
-                    description="Access documentation and library information",
-                    required=True,
-                    usage="MANDATORY for all documentation lookups",
-                ),
+                # MCPServer.CONTEXT7: MCPServerConfig(
+                #     command="npx",
+                #     args=["@context/mcp"],
+                #     description="Access documentation and library information",
+                #     required=True,
+                #     usage="MANDATORY for all documentation lookups",
+                # ),
                 MCPServer.MEMORY: MCPServerConfig(
                     command="npx",
-                    args=["@memory/mcp"],
+                    args=["-y", "@modelcontextprotocol/server-memory"],
                     description="Store and retrieve project context and knowledge",
                     required=True,
                     usage="MANDATORY for context persistence",
                 ),
                 MCPServer.SEQUENTIAL_THINKING: MCPServerConfig(
                     command="npx",
-                    args=["@sequential-thinking/mcp"],
+                    args=["-y", "@modelcontextprotocol/server-sequential-thinking"],
                     description="Complex problem decomposition and reasoning",
                     required=True,
                     usage="MANDATORY for complex problem solving",
                 ),
                 MCPServer.FILESYSTEM: MCPServerConfig(
                     command="npx",
-                    args=["@filesystem/mcp"],
+                    args=["-y", "@modelcontextprotocol/server-filesystem", "."],  # Add current directory as allowed
                     description="File system operations",
                     required=True,
                     usage="MANDATORY for all file operations",
                 ),
-                MCPServer.GIT: MCPServerConfig(
+                # MCPServer.GIT: MCPServerConfig(
+                #     command="npx",
+                #     args=["-y", "@modelcontextprotocol/server-git"],
+                #     description="Version control operations",
+                #     required=True,
+                #     usage="MANDATORY for version control",
+                # ),
+                MCPServer.GITHUB: MCPServerConfig(
                     command="npx",
-                    args=["@git/mcp"],
-                    description="Version control operations",
-                    required=True,
-                    usage="MANDATORY for version control",
+                    args=["-y", "@modelcontextprotocol/server-github"],
+                    description="GitHub operations",
+                    required=False,
+                    usage="Optional for GitHub integration",
                 ),
+                # MCPServer.TASKMASTER: MCPServerConfig(
+                #     command="npx",
+                #     args=["-y", "taskmaster-ai"],
+                #     description="Task management and tracking",
+                #     required=False,
+                #     usage="Optional for enhanced task management",
+                # ),
             }
         )
 
@@ -93,7 +143,7 @@ class LoggingConfig(BaseModel):
 class ExecutorConfig(BaseModel):
     """Configuration for Claude Code executor."""
 
-    model: str = "claude-3-opus-20240229"
+    model: str = "claude-opus-4-20250514"  # Updated to Opus 4
     max_tokens: int = 4096
     temperature: float = 0.3
     max_retries: int = 3
@@ -147,9 +197,15 @@ class BuildConfig(BaseModel):
     skip_tests: bool = False
     verbose: int = 0
     phases_to_execute: Optional[List[str]] = None
+    default_logging_config: Optional[LoggingConfig] = None
     checkpoint_interval: int = 300  # seconds
     auto_commit: bool = True
     commit_message_format: str = "{type}({scope}): {description}"
+    
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.default_logging_config is None:
+            self.default_logging_config = LoggingConfig()
 
 
 class Settings(BaseSettings):
@@ -165,8 +221,8 @@ class Settings(BaseSettings):
 
     # API Configuration
     anthropic_api_key: str = Field(default="", alias="ANTHROPIC_API_KEY")
-    anthropic_model: str = "claude-3-opus-20240229"
-    anthropic_small_fast_model: str = "claude-3-haiku-20240307"
+    anthropic_model: str = "claude-opus-4-20250514"  # Updated to Opus 4
+    anthropic_small_fast_model: str = "claude-3.5-sonnet-20241022"  # Updated to Sonnet 3.5
 
     # Paths
     base_output_dir: Path = Path("./claude-builds")
@@ -221,6 +277,38 @@ class Settings(BaseSettings):
                 # Merge logic would go here
                 
         return config
+
+
+class GlobalConfig:
+    """Global configuration management."""
+    
+    def __init__(self):
+        self.config_path = Path.home() / ".claude-code-builder" / "config.yaml"
+        self.config_path.parent.mkdir(parents=True, exist_ok=True)
+        self._config = self._load_config()
+    
+    def _load_config(self) -> Dict[str, Any]:
+        """Load configuration from file."""
+        if self.config_path.exists():
+            import yaml
+            with open(self.config_path) as f:
+                return yaml.safe_load(f) or {}
+        return {}
+    
+    def _save_config(self) -> None:
+        """Save configuration to file."""
+        import yaml
+        with open(self.config_path, 'w') as f:
+            yaml.dump(self._config, f, default_flow_style=False)
+    
+    def get(self, key: str, default: Any = None) -> Any:
+        """Get configuration value."""
+        return self._config.get(key, default)
+    
+    def set(self, key: str, value: Any) -> None:
+        """Set configuration value."""
+        self._config[key] = value
+        self._save_config()
 
 
 # Global settings instance

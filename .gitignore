@@ -174,3 +174,24 @@ settings.json
 *.temp
 *.bak
 .~*
+
+# Test directories and outputs
+test-logging-output/
+fullstack_app_test_app*/
+test_*.py
+test-*.md
+examples/
+
+# Non-core documentation
+ccb-*.md
+*-spec.md
+PROJECT_SUMMARY.md
+CONTRIBUTING.md
+CHANGELOG.md
+CLAUDE.local.md
+
+# Scripts and misc
+scripts/
+
+# Tests directory
+tests/
