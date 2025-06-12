@@ -1,0 +1,53 @@
+{
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": false,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length=100"],
+  "python.sortImports.args": ["--profile", "black"],
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.rulers": [100]
+  },
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.autoImportCompletions": true,
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": false,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/*.pyo": true,
+    "**/*.pyd": true,
+    ".Python": true,
+    "pip-log.txt": true,
+    "pip-delete-this-directory.txt": true,
+    ".tox": true,
+    ".coverage": true,
+    ".coverage.*": true,
+    "htmlcov": true,
+    "*.egg": true,
+    "*.egg-info": true,
+    "dist": true,
+    "build": true,
+    ".mypy_cache": true,
+    ".pytest_cache": true,
+    ".ruff_cache": true
+  },
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.toml": "toml",
+    ".env*": "dotenv"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": [".mcp.json"],
+      "url": "./schemas/mcp-config.schema.json"
+    }
+  ]
+}
