@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["@context/mcp"],
+      "description": "Access documentation and library information",
+      "required": true,
+      "usage": "MANDATORY for all documentation lookups"
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["@memory/mcp"],
+      "description": "Store and retrieve project context and knowledge",
+      "required": true,
+      "usage": "MANDATORY for context persistence"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["@sequential-thinking/mcp"],
+      "description": "Complex problem decomposition and reasoning",
+      "required": true,
+      "usage": "MANDATORY for complex problem solving"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["@filesystem/mcp"],
+      "description": "File system operations",
+      "required": true,
+      "usage": "MANDATORY for all file operations"
+    },
+    "git": {
+      "command": "npx",
+      "args": ["@git/mcp"],
+      "description": "Version control operations",
+      "required": true,
+      "usage": "MANDATORY for version control"
+    }
+  }
+}
