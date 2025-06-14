@@ -65,40 +65,55 @@ Claude Code Builder is an intelligent software generation system that:
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Claude Code Builder                       │
-├─────────────────────────────────────────────────────────────────┤
-│                          CLI Interface                           │
-│  ┌─────────────┬──────────────┬──────────────┬──────────────┐  │
-│  │   build     │   analyze    │   resume     │   validate   │  │
-│  └─────────────┴──────────────┴──────────────┴──────────────┘  │
-├─────────────────────────────────────────────────────────────────┤
-│                       Core Components                            │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                  Build Orchestrator                      │   │
-│  │  ┌─────────────┬─────────────┬─────────────────────┐   │   │
-│  │  │Phase Manager│Context Mgr  │  Checkpoint System  │   │   │
-│  │  └─────────────┴─────────────┴─────────────────────┘   │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    Agent System                          │   │
-│  │  ┌───────────┬────────────┬───────────┬────────────┐   │   │
-│  │  │Spec Agent │Task Agent  │Code Agent │Test Agent  │   │   │
-│  │  └───────────┴────────────┴───────────┴────────────┘   │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                  MCP Orchestrator                        │   │
-│  │  ┌──────────┬──────────┬──────────┬──────────────┐     │   │
-│  │  │Filesystem│ GitHub   │ Memory   │ Perplexity   │     │   │
-│  │  └──────────┴──────────┴──────────┴──────────────┘     │   │
-│  └─────────────────────────────────────────────────────────┘   │
-├─────────────────────────────────────────────────────────────────┤
-│                      External Services                           │
-│  ┌─────────────┬─────────────────┬─────────────────────────┐   │
-│  │ Anthropic   │   MCP Servers   │   External APIs         │   │
-│  └─────────────┴─────────────────┴─────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
+The following Mermaid diagram illustrates how the CLI, orchestrator, agents, MCP
+servers and external services interact:
+
+```mermaid
+graph TD
+  subgraph CLI
+    build([build])
+    analyze([analyze])
+    resume([resume])
+    validate([validate])
+  end
+
+  subgraph "Build Orchestrator"
+    PhaseMgr[Phase Manager]
+    CtxMgr[Context Manager]
+    Checkpoint[Checkpoint System]
+  end
+
+  subgraph "Agent System"
+    SpecAgent --> TaskAgent --> CodeAgent --> TestAgent
+  end
+
+  subgraph "MCP Orchestrator"
+    Filesystem
+    GitHub
+    Memory
+    Perplexity
+  end
+
+  subgraph "External Services"
+    Anthropic
+    ExternalAPIs["External APIs"]
+  end
+
+  build --> PhaseMgr
+  analyze --> SpecAgent
+  resume --> Checkpoint
+  validate --> SpecAgent
+  PhaseMgr --> SpecAgent
+  Checkpoint --> PhaseMgr
+  PhaseMgr --> CtxMgr
+  CtxMgr --> Checkpoint
+  SpecAgent --> TaskAgent
+  TaskAgent --> CodeAgent
+  CodeAgent --> TestAgent
+  Filesystem -.-> Anthropic
+  GitHub -.-> Anthropic
+  Memory -.-> Anthropic
+  Perplexity -.-> ExternalAPIs
 ```
 
 ## Installation
