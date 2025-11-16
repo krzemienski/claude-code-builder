@@ -29,6 +29,7 @@ packages = [
 
 [tool.poetry.scripts]
 claude-code-builder = "claude_code_builder.cli.main:cli"
+claude-code-builder-v2 = "claude_code_builder_v2.cli.main:main"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
