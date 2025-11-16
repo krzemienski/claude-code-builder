@@ -84,7 +84,12 @@ class SDKBuildOrchestrator:
             await self.logger.start_session(self.session_id)
 
         # Initialize SDK components
-        exec_config = self.build_config.default_executor_config
+        # Create default executor config if not provided
+        exec_config = ExecutorConfig(
+            model="claude-3-haiku-20240307",
+            max_tokens=4096,
+            temperature=0.3,
+        )
         self.sdk_manager = SDKClientManager(
             exec_config, self.logger, api_key=self.api_key
         )

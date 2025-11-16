@@ -162,8 +162,8 @@ class StreamingProgressReporter:
         # Always log
         self.logger.logger.info(
             "streaming_progress",
-            event=event_type,
-            message=message,
+            event_type=event_type,
+            msg=message,
         )
 
     def get_statistics(self) -> Dict[str, Any]:
