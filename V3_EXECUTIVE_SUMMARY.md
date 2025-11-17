@@ -17,7 +17,7 @@ Transform CCB from a **code generator** into a **Skills-powered development plat
 - **Community-driven**: Marketplace for shared best practices
 - **Zero context cost**: Resources live on filesystem until needed
 
-## 🚀 5 Core New Features
+## 🚀 6 Core New Features
 
 ### 1. **Intelligent Project Templates with Skills**
 **What**: Pre-built skills for common project types (FastAPI, Next.js, microservices, etc.)
@@ -97,6 +97,42 @@ claude-code-builder review --watch ./project --continuous
 **Skills**: `python-code-quality`, `python-fastapi-best-practices`, `react-best-practices`, `security-code-review`, `performance-code-review`
 
 **Value**: Continuous improvement, domain expertise, learning tool, safe refactoring
+
+---
+
+### 6. **Dynamic Skill Generation & Self-Improvement** 🆕
+**What**: Automatically identifies, generates, validates, and uses new skills during the build process
+
+**How**:
+```bash
+# System automatically:
+# 1. Analyzes spec for technology combinations
+# 2. Detects missing skills (e.g., "FastAPI + Stripe webhooks")
+# 3. Generates skill using MCP research (context7, fetch, memory)
+# 4. Validates skill with tests
+# 5. Uses skill via Claude Agent SDK
+# 6. Saves for future reuse
+```
+
+**Result**: Self-improving system that learns and builds new capabilities on-demand
+
+**Process**:
+- **Discovery**: Identifies what skills are needed from spec
+- **Generation**: Creates SKILL.md + examples + tests using AI + MCP research
+- **Validation**: Tests generated skill before use
+- **Integration**: Saves to filesystem, SDK discovers and uses automatically
+- **Learning**: Refines based on build feedback
+
+**SDK Integration**: Generated skills are first-class citizens, saved to `~/.claude/skills/generated/` and loaded via Claude Agent SDK's progressive disclosure system
+
+**Value**:
+- Handles novel technology combinations (FastAPI + Temporal + Stripe + Twilio)
+- Keeps pace with new frameworks automatically
+- Organization-specific patterns captured
+- Self-improving from every build
+- 93%+ cost reduction (skills cache expertise)
+
+**See**: `V3_FEATURE_6_DYNAMIC_SKILL_GENERATION.md` for complete details
 
 ## 📦 5 Custom Skills for v3
 
@@ -349,7 +385,8 @@ claude-code-builder init \
 2. **Skills Marketplace**: Community expertise, packaged and reusable
 3. **Production-First**: Security, testing, deployment from day 1
 4. **Adaptive Pipelines**: Custom workflows per project type
-5. **Self-Improving**: Skills version controlled and evolve
+5. **Dynamic Skill Generation**: Auto-generates missing skills during build
+6. **Self-Improving**: Skills version controlled, refined, and evolve from feedback
 
 ## 🔑 Success Metrics
 
