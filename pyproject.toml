@@ -30,6 +30,8 @@ claude-code-builder = "claude_code_builder.cli.main:cli"
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
 anthropic = "^0.34.0"
+claude-agent-sdk = "^0.1.0"  # Real Claude Agent SDK
+anyio = "^4.0.0"  # Required by SDK
 click = "^8.1.7"
 rich = "^13.7.0"
 pydantic = "^2.5.0"
