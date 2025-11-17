@@ -1,6 +1,30 @@
-"""Mock MCP orchestrator for testing without real MCP servers."""
+"""Mock MCP orchestrator for testing without real MCP servers.
 
+DEPRECATED: This module is part of v1 which uses mock implementations.
+Please use claude_code_builder_v2 which uses the real Claude Agent SDK.
+
+v2 Features:
+- Real Claude Agent SDK integration
+- No mocks - all real implementations
+- MCP via create_sdk_mcp_server
+- Async throughout
+- Complete CLI with all commands
+
+To use v2:
+    from claude_code_builder_v2.cli.main import cli
+    # or
+    poetry run claude-code-builder --help
+"""
+
+import warnings
 from pathlib import Path
+
+warnings.warn(
+    "claude_code_builder.mcp.mock_orchestrator is deprecated. "
+    "Use claude_code_builder_v2 with real Claude Agent SDK instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 from typing import Any, Dict, List, Optional
 
 from claude_code_builder.core.config import MCPConfig
