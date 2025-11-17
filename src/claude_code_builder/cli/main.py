@@ -1,4 +1,19 @@
-"""Main CLI entry point for Claude Code Builder."""
+"""Main CLI entry point for Claude Code Builder.
+
+DEPRECATED: This is the v1 CLI which uses mock implementations for testing.
+The production CLI now uses claude_code_builder_v2 with real Claude Agent SDK.
+
+Please use v2 for all new projects:
+    poetry run claude-code-builder --help
+    (points to claude_code_builder_v2.cli.main:cli)
+
+v2 provides:
+- Real Claude Agent SDK integration (no mocks)
+- Full async support
+- Real MCP server integration
+- Complete CLI commands (build, init, resume, status, logs)
+- Comprehensive logging
+"""
 
 import asyncio
 import sys

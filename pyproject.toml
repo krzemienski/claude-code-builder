@@ -22,15 +22,18 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed"
 ]
-packages = [{include = "claude_code_builder", from = "src"}]
+packages = [
+    {include = "claude_code_builder", from = "src"},
+    {include = "claude_code_builder_v2", from = "src"}
+]
 
 [tool.poetry.scripts]
-claude-code-builder = "claude_code_builder.cli.main:cli"
+claude-code-builder = "claude_code_builder_v2.cli.main:cli"  # Now using v2 (real SDK)
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
 anthropic = "^0.34.0"
-claude-agent-sdk = "^0.1.0"  # Real Claude Agent SDK
+claude-agent-sdk = {git = "https://github.com/anthropics/claude-agent-sdk-python.git", branch = "main"}  # Latest git version
 anyio = "^4.0.0"  # Required by SDK
 click = "^8.1.7"
 rich = "^13.7.0"

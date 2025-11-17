@@ -1,6 +1,16 @@
 # Claude Code Builder
 
-A revolutionary AI-powered Python CLI tool that automates the entire software development lifecycle using the Claude Code SDK. From specification to deployment, Claude Code Builder transforms product requirements into production-ready software with minimal human intervention.
+> **📢 Now using v2 with Real Claude Agent SDK!**
+>
+> This project has been upgraded to use the official **Claude Agent SDK** (not mocks).
+> - All functionality uses real SDK implementations
+> - Complete async support throughout
+> - Full MCP integration via `create_sdk_mcp_server`
+> - Production-ready CLI with all commands
+>
+> The v1 implementation remains for reference but is **deprecated**.
+
+A revolutionary AI-powered Python CLI tool that automates the entire software development lifecycle using the **Claude Agent SDK**. From specification to deployment, Claude Code Builder transforms product requirements into production-ready software with minimal human intervention.
 
 ## Overview
 
