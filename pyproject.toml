@@ -24,11 +24,13 @@ classifiers = [
 ]
 packages = [
     {include = "claude_code_builder", from = "src"},
-    {include = "claude_code_builder_v2", from = "src"}
+    {include = "claude_code_builder_v2", from = "src"},
+    {include = "claude_code_builder_v3", from = "src"}
 ]
 
 [tool.poetry.scripts]
-claude-code-builder = "claude_code_builder_v2.cli.main:cli"  # Now using v2 (real SDK)
+claude-code-builder = "claude_code_builder_v2.cli.main:cli"  # v2 (real SDK)
+claude-code-builder-v3 = "claude_code_builder_v3.cli.main:cli"  # v3 (Skills-powered)
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
