@@ -1,34 +1,31 @@
 [tool.poetry]
 name = "claude-code-builder"
-version = "0.1.0"
-description = "AI-powered Python CLI tool that automates the complete software development lifecycle"
+version = "3.0.0"
+description = "Shannon-aligned specification-driven development framework with quantitative analysis, NO MOCKS enforcement, and cross-session state persistence"
 authors = ["Claude Code Builder Team"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://github.com/claude-code-builder/claude-code-builder"
-repository = "https://github.com/claude-code-builder/claude-code-builder"
-documentation = "https://claude-code-builder.readthedocs.io"
-keywords = ["ai", "automation", "cli", "development", "claude", "anthropic"]
+homepage = "https://github.com/krzemienski/claude-code-builder"
+repository = "https://github.com/krzemienski/claude-code-builder"
+keywords = ["claude", "plugin", "specification-driven", "quantitative", "no-mocks", "functional-testing", "shannon"]
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Environment :: Console",
+    "Environment :: Plugins",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Code Generators",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
     "Typing :: Typed"
 ]
-packages = [
-    {include = "claude_code_builder", from = "src"},
-    {include = "claude_code_builder_v2", from = "src"}
-]
-
-[tool.poetry.scripts]
-claude-code-builder = "claude_code_builder_v2.cli.main:cli"  # Now using v2 (real SDK)
+# v3 is a Claude plugin framework (.claude/ directory)
+# No Python packages to install
+packages = []
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"

@@ -1,0 +1,29 @@
+{
+  "SessionStart": {
+    "command": ["bash", "${CLAUDE_PLUGIN_ROOT}/hooks/session_start.sh"],
+    "timeout": 5000,
+    "description": "Load CCB principles on session startup"
+  },
+  "UserPromptSubmit": {
+    "command": ["python3", "${CLAUDE_PLUGIN_ROOT}/hooks/user_prompt_submit.py"],
+    "timeout": 2000,
+    "description": "Inject build goal and phase context on every prompt"
+  },
+  "PostToolUse": {
+    "command": ["python3", "${CLAUDE_PLUGIN_ROOT}/hooks/post_tool_use.py"],
+    "timeout": 3000,
+    "toolPattern": ["Write", "Edit", "MultiEdit"],
+    "description": "Block mock patterns and enforce test coverage"
+  },
+  "PreCompact": {
+    "command": ["python3", "${CLAUDE_PLUGIN_ROOT}/hooks/precompact.py"],
+    "timeout": 15000,
+    "continueOnError": false,
+    "description": "Create checkpoint before context compression (MUST succeed)"
+  },
+  "Stop": {
+    "command": ["python3", "${CLAUDE_PLUGIN_ROOT}/hooks/stop.py"],
+    "timeout": 2000,
+    "description": "Validate phase completion before session end"
+  }
+}
