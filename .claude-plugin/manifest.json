@@ -1,0 +1,194 @@
+{
+  "name": "claude-code-builder",
+  "version": "3.0.0",
+  "description": "Specification-driven development framework with quantitative analysis, functional testing enforcement (NO MOCKS), and cross-session state persistence.",
+  "author": "Claude Code Builder Team",
+  "license": "MIT",
+  "homepage": "https://github.com/krzemienski/claude-code-builder",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krzemienski/claude-code-builder.git"
+  },
+  "keywords": [
+    "development",
+    "specification-driven",
+    "quantitative",
+    "testing",
+    "no-mocks",
+    "functional-testing",
+    "phase-planning",
+    "complexity-analysis"
+  ],
+  "claude": {
+    "version": ">=1.0.0"
+  },
+  "mcps": {
+    "serena": {
+      "package": "@modelcontextprotocol/server-memory",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "required": true,
+      "description": "State persistence for cross-session continuity. 61% of CCB functionality requires this MCP.",
+      "fallback": "none",
+      "degradation": "high"
+    },
+    "context7": {
+      "package": "@modelcontextprotocol/server-context7",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-context7"],
+      "required": false,
+      "description": "Framework documentation lookup for technology research.",
+      "fallback": "web-search",
+      "degradation": "medium"
+    },
+    "fetch": {
+      "package": "@modelcontextprotocol/server-fetch",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "required": false,
+      "description": "API documentation and external resource fetching.",
+      "fallback": "manual-research",
+      "degradation": "medium"
+    },
+    "puppeteer": {
+      "package": "@modelcontextprotocol/server-puppeteer",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "required": false,
+      "description": "Real browser automation for functional web testing (NO MOCKS).",
+      "fallback": "manual-testing",
+      "degradation": "low",
+      "conditional": "web-projects"
+    },
+    "ios-simulator": {
+      "package": "@modelcontextprotocol/server-ios-simulator",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-ios-simulator"],
+      "required": false,
+      "description": "Real iOS Simulator for functional mobile testing (NO MOCKS).",
+      "fallback": "manual-testing",
+      "degradation": "low",
+      "conditional": "ios-projects"
+    },
+    "sequential-thinking": {
+      "package": "@modelcontextprotocol/server-sequential-thinking",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "required": false,
+      "description": "Deep reasoning for complex specification analysis.",
+      "fallback": "standard-analysis",
+      "degradation": "low"
+    }
+  },
+  "commands": [
+    {
+      "name": "init",
+      "description": "Initialize build from specification with complexity analysis and phase planning"
+    },
+    {
+      "name": "status",
+      "description": "Show current build status, phase progress, and validation gates"
+    },
+    {
+      "name": "checkpoint",
+      "description": "Manually create build state checkpoint"
+    },
+    {
+      "name": "resume",
+      "description": "Resume build from checkpoint"
+    },
+    {
+      "name": "analyze",
+      "description": "Run 6D complexity analysis without initializing build"
+    },
+    {
+      "name": "index",
+      "description": "Generate PROJECT_INDEX for existing codebase (94% token reduction)"
+    },
+    {
+      "name": "build",
+      "description": "Execute current phase with validation gates"
+    },
+    {
+      "name": "do",
+      "description": "Execute task on existing codebase (brownfield support)"
+    },
+    {
+      "name": "test",
+      "description": "Run functional tests with NO MOCKS enforcement"
+    },
+    {
+      "name": "reflect",
+      "description": "Honest gap assessment and quality scoring"
+    }
+  ],
+  "skills": {
+    "rigid": [
+      "ccb-principles",
+      "functional-testing"
+    ],
+    "protocol": [
+      "spec-driven-building",
+      "phase-execution",
+      "checkpoint-preservation",
+      "project-indexing"
+    ],
+    "quantitative": [
+      "complexity-analysis",
+      "validation-gates",
+      "test-coverage"
+    ],
+    "flexible": [
+      "mcp-augmented-research",
+      "honest-assessment",
+      "incremental-enhancement"
+    ]
+  },
+  "enforcement": {
+    "no_mocks": {
+      "enabled": true,
+      "level": "blocking",
+      "patterns": [
+        "jest.mock",
+        "unittest.mock",
+        "sinon",
+        "Mockito",
+        "gomock"
+      ]
+    },
+    "specification_first": {
+      "enabled": true,
+      "level": "blocking",
+      "minimum_spec_words": 50
+    },
+    "quantitative_analysis": {
+      "enabled": true,
+      "level": "required",
+      "dimensions": 6
+    },
+    "state_persistence": {
+      "enabled": true,
+      "level": "automatic",
+      "checkpoint_on_precompact": true
+    }
+  },
+  "hooks": {
+    "SessionStart": "hooks/session_start.sh",
+    "UserPromptSubmit": "hooks/user_prompt_submit.py",
+    "PostToolUse": "hooks/post_tool_use.py",
+    "PreCompact": "hooks/precompact.py",
+    "Stop": "hooks/stop.py"
+  },
+  "core_docs": {
+    "ccb-principles": "core/ccb-principles.md",
+    "complexity-analysis": "core/complexity-analysis.md",
+    "phase-planning": "core/phase-planning.md",
+    "testing-philosophy": "core/testing-philosophy.md",
+    "state-management": "core/state-management.md",
+    "project-indexing": "core/project-indexing.md"
+  },
+  "dependencies": {
+    "python": ">=3.9",
+    "node": ">=18.0.0"
+  }
+}
